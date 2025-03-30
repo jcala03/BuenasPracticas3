@@ -1,0 +1,110 @@
+# Tutorial: Calculadora de Créditos Bancarios
+
+## Introducción
+
+Este tutorial explica el funcionamiento de nuestro proyecto, una aplicación web desarrollada con Laravel que permite calcular cuotas mensuales de préstamos y visualizar tablas de amortización completas. Esta herramienta es ideal para que los podamos planificar nuestras finanzas antes de solicitar un crédito.
+
+## Instalación y ejecución
+
+Después de clonar el proyecto, por favor, sigue estos pasos para configurarlo:
+
+1. **Instalar dependencias**:
+   ```
+   composer install
+   ```
+
+2. **Iniciar el servidor de desarrollo**:
+   ```
+   php artisan serve
+   ```
+
+3. Accede a la aplicación desde tu navegador en: `http://localhost:8000`
+
+## Características principales
+
+- Cálculo de cuota mensual basado en monto, tasa de interés y plazo
+- Generación de tabla de amortización detallada
+- Validación de datos del usuario
+- Consideración de la edad del solicitante (calculada a partir de la fecha de nacimiento)
+- Interfaz sencilla e intuitiva
+
+## Estructura del proyecto
+
+El proyecto sigue una estructura estándar de Laravel con los siguientes componentes clave:
+
+- **Vistas**: Archivos Blade para la interfaz de usuario (ej. `vistauno.blade.php`)
+- **Rutas**: Definición de endpoints para procesar formularios 
+- **Controladores**: Lógica para el cálculo de intereses y generación de tablas de amortización
+- **Estilos**: Utiliza Tailwind CSS y Bootstrap para el diseño
+
+## Cómo funciona el simulador
+
+### Paso 1: Ingreso de datos
+
+El usuario debe completar un formulario con la siguiente información:
+
+1. **Monto del crédito**: La cantidad de dinero que desea solicitar
+2. **Tasa de interés mensual**: Porcentaje de interés aplicado mensualmente (1.78% por defecto)
+3. **Plazo en meses**: Duración del préstamo
+4. **Fecha de nacimiento**: Para calcular la edad del solicitante
+
+### Paso 2: Procesamiento del cálculo
+
+Cuando el usuario envía el formulario, la aplicación:
+
+1. Valida los datos ingresados
+2. Calcula la edad del solicitante
+3. Determina la cuota mensual utilizando la fórmula de amortización estándar
+4. Genera una tabla de amortización completa que muestra mes a mes:
+   - Saldo pendiente
+   - Interés pagado
+   - Capital amortizado
+   - Cuota mensual
+
+### Paso 3: Visualización de resultados
+
+Después del cálculo, el sistema muestra:
+
+1. Un resumen con los datos principales:
+   - Monto solicitado
+   - Tasa mensual
+   - Plazo
+   - Edad del solicitante
+   - Cuota mensual estimada
+
+2. La tabla de amortización detallada que permite al usuario visualizar cómo se distribuirá el pago de su crédito durante todo el plazo.
+
+## Flujo de trabajo técnico
+
+1. El formulario en `vistauno.blade.php` envía una solicitud POST a la ruta `calcular.intereses`
+2. El controlador correspondiente procesa los datos y realiza los cálculos necesarios
+3. Se devuelven los resultados a la misma vista para mostrarlos al usuario
+
+## Fórmula de cálculo
+
+La cuota mensual se calcula utilizando la fórmula de amortización francesa:
+
+```
+Cuota = Monto * (i * (1 + i)^n) / ((1 + i)^n - 1)
+```
+
+Donde:
+- `Monto` es el capital prestado
+- `i` es la tasa de interés mensual (en formato decimal)
+- `n` es el número de cuotas (plazo en meses)
+
+## Ejemplo de uso
+
+1. Un usuario desea solicitar un préstamo de $10,000
+2. Establece una tasa de interés mensual del 1.78%
+3. Selecciona un plazo de 24 meses
+4. Ingresa su fecha de nacimiento (01/01/1980)
+5. Al hacer clic en "Calcular", el sistema mostrará:
+   - La cuota mensual (aproximadamente $508.40)
+   - La tabla de amortización completa para los 24 meses
+
+## Consideraciones adicionales
+
+- La aplicación utiliza Bootstrap para el diseño, aunque el proyecto también tiene configurado Tailwind CSS
+- Los mensajes de error aparecen bajo cada campo en caso de validación fallida
+- La vista mantiene los valores previos en caso de error, mejorando la experiencia de usuario
