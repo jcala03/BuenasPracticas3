@@ -46,7 +46,7 @@
         <p><strong>Edad:</strong> {{ $edad }} años</p>
         <p><strong>Cuota mensual estimada:</strong> ${{ number_format($cuota, 2) }}</p>
 
-        <h3>Tabla de Amortización</h3>
+        <h3>Proyección</h3>
         <table border="1">
             <thead>
                 <tr>
